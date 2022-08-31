@@ -21,7 +21,7 @@ class _PlayMusicState extends State<PlayMusic> {
   //Duration(microseconds: (millis * 1000).toInt())
   Duration musicLength = const Duration();
   int index = 0;
-  String name = '';
+  String name = 'no data';
   int expandedIndex = -1;
   List<MusicModel> mylist = [
     MusicModel(name: "سورة يس", url: 'yaseen.mp3'),
@@ -75,10 +75,16 @@ class _PlayMusicState extends State<PlayMusic> {
 
   @override
   Widget build(BuildContext context) {
-    log("build $name");
-
     final size = MediaQuery.of(context).size;
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: const Color.fromARGB(255, 0, 58, 53),
+        title: const Text(
+          "القران الكريم كامل بصوت الشيخ محمد عثمان",
+          textAlign: TextAlign.right,
+          style: TextStyle(fontSize: 15),
+        ),
+      ),
       bottomNavigationBar: Builder(builder: (context) {
         if (expandedIndex == -1) {
           return const SizedBox();
@@ -92,8 +98,7 @@ class _PlayMusicState extends State<PlayMusic> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Align(
-                      alignment: Alignment.centerRight,
-                      child: Text("$name edit this")),
+                      alignment: Alignment.centerRight, child: Text(name)),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -192,6 +197,7 @@ class _PlayMusicState extends State<PlayMusic> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
+              SizedBox(height: size.height * .01),
               Container(
                 height: size.height * .8,
                 width: double.infinity,
@@ -216,7 +222,10 @@ class _PlayMusicState extends State<PlayMusic> {
                             : const Color(0xff001614),
                         child: ListTile(
                           trailing: Text(
-                            name,
+                            // " ${mylist[index].name}  ${index + 1}",
+                            " ${mylist[index].name}",
+                            //"$name ${index + 1}",
+                            textAlign: TextAlign.right,
                             style: TextStyle(
                               color: expandedIndex != index
                                   ? Colors.white
