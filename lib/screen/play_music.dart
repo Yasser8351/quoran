@@ -192,7 +192,14 @@ class _PlayMusicState extends State<PlayMusic> {
       }),
       body: SingleChildScrollView(
         child: Container(
-          color: const Color(0xff001614),
+          decoration: const BoxDecoration(
+            color: Color(0xff001614),
+            image: DecorationImage(
+              image: AssetImage("assets/image.jpg"),
+              fit: BoxFit.cover,
+            ),
+          ),
+          //color: const Color(0xff001614),
           height: size.height,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
