@@ -11,6 +11,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final audioPlayer = AudioPlayer();
+
   //AssetsAudioPlayer();
   bool isPlaying = false;
   Duration duration = Duration.zero;

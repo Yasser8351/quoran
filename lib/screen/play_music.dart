@@ -1,6 +1,8 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 
+import '../model/music_model.dart';
+
 class PlayMusic extends StatefulWidget {
   const PlayMusic({Key? key}) : super(key: key);
 
@@ -15,7 +17,12 @@ class _PlayMusicState extends State<PlayMusic> {
   Duration currentPostion = const Duration();
   Duration musicLength = const Duration();
   int index = 0;
-  List<String> mylist = ['a.mp3', 'a.mp3'];
+  //List<String> mylist = ['a.mp3', 'b.mp3'];
+
+  List<MusicModel> mylist = [
+    MusicModel(name: "سورة يس", url: 'yaseen.mp3'),
+    MusicModel(name: "سورة الفرقان", url: 'alforgan.mp3'),
+  ];
   @override
   void initState() {
     super.initState();
@@ -30,6 +37,10 @@ class _PlayMusicState extends State<PlayMusic> {
     player.onAudioPositionChanged.listen((d) {
       // Give us the current position of the Audio file
 
+      if (currentPostion == musicLength) {
+        setState(() => isPlaying = true);
+      }
+
       setState(() {
         currentPostion = d;
       });
@@ -40,10 +51,6 @@ class _PlayMusicState extends State<PlayMusic> {
           musicLength = d;
         });
       });
-
-      if (currentPostion == musicLength) {
-        setState(() => isPlaying = true);
-      }
     });
   }
 
@@ -66,6 +73,12 @@ class _PlayMusicState extends State<PlayMusic> {
             alignment: Alignment.center,
             color: const Color(0xff001614),
             child: Image.asset("assets/logo2.jpg"),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Align(
+                alignment: Alignment.centerRight,
+                child: Text(mylist[index].name)),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -98,13 +111,13 @@ class _PlayMusicState extends State<PlayMusic> {
                       isPlaying = true;
                       print('$index');
                     });
-                    cache.play(mylist[index]);
+                    cache.play(mylist[index].url);
                   } else {
                     setState(() {
                       isPlaying = true;
                     });
                     print('$index');
-                    cache.play(mylist[index]);
+                    cache.play(mylist[index].url);
                   }
                 },
               ),
@@ -119,7 +132,7 @@ class _PlayMusicState extends State<PlayMusic> {
                     setState(() {
                       isPlaying = true;
                     });
-                    playMusic(mylist[index]);
+                    playMusic(mylist[index].url);
                   }
                 },
                 icon: isPlaying
@@ -141,20 +154,19 @@ class _PlayMusicState extends State<PlayMusic> {
                       isPlaying = true;
                     });
                     print('$index');
-                    cache.play(mylist[index]);
+                    cache.play(mylist[index].url);
                   } else {
                     setState(() {
                       index = 0;
                       isPlaying = true;
                     });
                     print("$index");
-                    cache.play(mylist[index]);
+                    cache.play(mylist[index].url);
                   }
                 },
               )
             ],
           ),
-          Text(mylist[index])
         ],
       ),
     );
