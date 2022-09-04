@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
+import 'package:share_plus/share_plus.dart';
 
 import '../model/music_model.dart';
 
@@ -17,8 +18,6 @@ class _PlayMusicState extends State<PlayMusic> {
   late AudioCache cache;
   bool isPlaying = false;
   Duration currentPostion = Duration.zero;
-  // Duration currentPostion = const Duration();
-  //Duration(microseconds: (millis * 1000).toInt())
   Duration musicLength = const Duration();
   int index = 0;
   String name = 'no data';
@@ -40,26 +39,9 @@ class _PlayMusicState extends State<PlayMusic> {
     //getCurrentPostion();
   }
 
-  // @override
-  // void didChangeAppLifecycleState(AppLifecycleState state) {
-  //   log("state Screen : $state");
-  //   if (state == AppLifecycleState.resumed) {
-  //     // Audio player is a custom class with resume and pause static methods
-  //     playMusic("");
-  //     log("state Screen : $state");
-  //   } else {
-  //     log("state Screen : $state");
-  //     stopMusic();
-  //   }
-  // }
-
   setUp() {
     player.onAudioPositionChanged.listen((d) {
       // Give us the current position of the Audio file
-
-      // if (currentPostion == musicLength) {
-      //   setState(() => isPlaying = true);
-      // }
 
       setState(() {
         currentPostion = d;
@@ -99,37 +81,37 @@ class _PlayMusicState extends State<PlayMusic> {
               setState(() => isPlaying = false);
               stopMusic();
               return true;
-              // final differenc = DateTime.now().difference(timeBackPressed);
-              // final exitApp = differenc >= const Duration(seconds: 2);
-
-              // timeBackPressed = DateTime.now();
-
-              // if (exitApp) {
-              //   //setState(() => isPlaying = false);
-              //   //stopMusic();
-              //   ScaffoldMessenger.of(context).showSnackBar(
-              //     SnackBar(
-              //       backgroundColor: Theme.of(context).primaryColor,
-              //       duration: const Duration(seconds: 2),
-              //       content: const Text(
-              //         "اضغط مرة اخرى للخروج",
-              //         textAlign: TextAlign.right,
-              //       ),
-              //     ),
-              //   );
-              //   return false;
-              // } else {
-              //   return true;
-              // }
             },
             child: Scaffold(
               appBar: AppBar(
+                actions: [
+                  SizedBox(width: 7),
+                  IconButton(
+                    onPressed: () async {
+                      await Share.share("");
+                    },
+                    icon: Icon(Icons.share_outlined),
+                  ),
+                  Spacer(),
+                  Align(
+                    alignment: Alignment.center,
+                    child: const Text(
+                      "القرآن الكريم كامل بصوت الشيخ محمد عثمان حاج",
+                      textAlign: TextAlign.right,
+                      style: TextStyle(fontSize: 15),
+                    ),
+                  ),
+                  SizedBox(width: 7),
+                ],
                 backgroundColor: const Color.fromARGB(255, 0, 58, 53),
-                title: const Text(
-                  "القران الكريم كامل بصوت الشيخ محمد عثمان",
-                  textAlign: TextAlign.right,
-                  style: TextStyle(fontSize: 15),
-                ),
+                // title: Align(
+                //   alignment: Alignment.centerRight,
+                //   child: const Text(
+                //     "القرآن الكريم كامل بصوت الشيخ محمد عثمان حاج",
+                //     textAlign: TextAlign.right,
+                //     style: TextStyle(fontSize: 13),
+                //   ),
+                // ),
               ),
               bottomNavigationBar: Builder(builder: (context) {
                 if (expandedIndex == -1) {
@@ -151,7 +133,6 @@ class _PlayMusicState extends State<PlayMusic> {
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
                             Text(formatTimeCurrentPostion(currentPostion)),
-                            //Text('${currentPostion.inSeconds.toDouble()}'),
                             SizedBox(
                                 width: 250,
                                 child: Slider(

@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.quoran">
+    package="com.quoran.app">
    <application
-        android:label="quoran"
+        android:label="القرآن الكريم كامل بدون انترنت"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

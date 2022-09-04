@@ -36,12 +36,20 @@ dependencies:
 
   audioplayers: ^0.20.1
   assets_audio_player: ^3.0.5
-  file_picker: ^4.5.1
-  path_provider: ^2.0.9
+  # share link
+  share_plus: ^2.0.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
+  # change launcher icons
+  flutter_launcher_icons: ^0.9.3
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/logo.png"
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is

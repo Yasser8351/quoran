@@ -1,4 +1,4 @@
-package com.example.quoran
+package com.quoran.app
 
 import io.flutter.embedding.android.FlutterActivity
 
