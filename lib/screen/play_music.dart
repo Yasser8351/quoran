@@ -19,6 +19,7 @@ class _PlayMusicState extends State<PlayMusic> {
   bool isPlaying = false;
   Duration currentPostion = Duration.zero;
   Duration musicLength = const Duration();
+  Duration duration = Duration.zero;
   int index = 0;
   String name = 'no data';
   int expandedIndex = -1;
@@ -28,6 +29,7 @@ class _PlayMusicState extends State<PlayMusic> {
     MusicModel(name: "سورة الفرقان", url: 'alforgan.mp3'),
     MusicModel(name: "سورة يس", url: 'yaseen.mp3'),
   ];
+
   @override
   void initState() {
     super.initState();
@@ -36,24 +38,49 @@ class _PlayMusicState extends State<PlayMusic> {
     cache = AudioCache(fixedPlayer: player);
     index = 0;
     setUp();
+
     //getCurrentPostion();
   }
 
+  getCurrentPostion() {
+    // if (int.parse(currentPostion.toString()) != 0)
+    if (currentPostion == musicLength) {
+      log("****************");
+      log("Stop getCurrentPostion = currentPostion $currentPostion");
+      // log("musicLength $musicLength");
+      // log("index $index");
+      // log("expandedIndex $expandedIndex");
+      // log("****************");
+      if (expandedIndex == index) {
+        setState(() => index = 0);
+      } else {
+        setState(() => index + 1);
+      }
+    }
+  }
+
   setUp() {
-    player.onAudioPositionChanged.listen((d) {
-      // Give us the current position of the Audio file
+    player.onAudioPositionChanged.listen(
+      (d) {
+        // Give us the current position of the Audio file
 
-      setState(() {
-        currentPostion = d;
-      });
-
-      player.onDurationChanged.listen((d) {
-        //Returns the duration of the audio file
         setState(() {
-          musicLength = d;
+          log("currentPostion $currentPostion");
+          currentPostion = d;
         });
-      });
-    });
+
+        player.onDurationChanged.listen(
+          (d) {
+            //Returns the duration of the audio file
+            setState(() {
+              musicLength = d;
+
+              log("musicLength $musicLength");
+            });
+          },
+        );
+      },
+    );
   }
 
   String formatTimeCurrentPostion(Duration duration) {
@@ -136,13 +163,17 @@ class _PlayMusicState extends State<PlayMusic> {
                             SizedBox(
                                 width: 250,
                                 child: Slider(
+                                    min: 0.0,
                                     thumbColor: const Color(0xff001614),
                                     inactiveColor:
                                         const Color.fromARGB(255, 2, 145, 133),
                                     activeColor:
                                         const Color.fromARGB(255, 4, 61, 56),
                                     value: currentPostion.inSeconds.toDouble(),
-                                    max: musicLength.inSeconds.toDouble(),
+                                    max: musicLength < currentPostion
+                                        ? 1.toDouble()
+                                        : musicLength.inSeconds.toDouble(),
+                                    //max: 0,
                                     onChanged: (val) {
                                       seekTo(val.toInt());
                                     })),
@@ -266,13 +297,24 @@ class _PlayMusicState extends State<PlayMusic> {
                                     ? Colors.white
                                     : null,
                                 child: ListTile(
-                                  trailing: Text(
-                                    " ${mylist[index].name}",
-                                    textAlign: TextAlign.right,
-                                    style: TextStyle(
-                                      color: expandedIndex != index
-                                          ? Colors.white
-                                          : const Color(0xff001614),
+                                  trailing: expandedIndex == index
+                                      ? Icon(
+                                          isPlaying
+                                              ? Icons.pause
+                                              : Icons.play_arrow,
+                                          color: const Color(0xff001614),
+                                        )
+                                      : SizedBox(width: 24),
+                                  title: Align(
+                                    alignment: Alignment.centerRight,
+                                    child: Text(
+                                      " ${mylist[index].name}",
+                                      textAlign: TextAlign.right,
+                                      style: TextStyle(
+                                        color: expandedIndex != index
+                                            ? Colors.white
+                                            : const Color(0xff001614),
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -303,6 +345,7 @@ class _PlayMusicState extends State<PlayMusic> {
 
   seekTo(int sec) {
     // To seek the audio to a new position
+
     player.seek(Duration(seconds: sec));
   }
 
@@ -311,7 +354,6 @@ class _PlayMusicState extends State<PlayMusic> {
     super.dispose();
     stopMusic();
     player.dispose();
-    log("dispose");
   }
 
   @override
@@ -319,6 +361,5 @@ class _PlayMusicState extends State<PlayMusic> {
     super.deactivate();
     stopMusic();
     player.dispose();
-    log("deactivate");
   }
 }
