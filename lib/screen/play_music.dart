@@ -19,6 +19,8 @@ class _PlayMusicState extends State<PlayMusic> {
   bool isPlaying = false;
   Duration currentPostion = Duration.zero;
   Duration musicLength = const Duration();
+  Duration formatDurationFrom1 = Duration(milliseconds: 100000);
+  Duration formatDurationFrom2 = Duration(milliseconds: 10000);
   Duration duration = Duration.zero;
   int index = 0;
   String name = 'no data';
@@ -27,7 +29,6 @@ class _PlayMusicState extends State<PlayMusic> {
   List<MusicModel> mylist = [
     MusicModel(name: "سورة يس", url: 'yaseen.mp3'),
     MusicModel(name: "سورة الفرقان", url: 'alforgan.mp3'),
-    MusicModel(name: "سورة يس", url: 'yaseen.mp3'),
   ];
 
   @override
@@ -87,13 +88,23 @@ class _PlayMusicState extends State<PlayMusic> {
     String twoDigits(int n) => n.toString().padLeft(2, "0");
     String twoDigitMinutes = twoDigits(duration.inMinutes.remainder(60));
     String twoDigitSeconds = twoDigits(duration.inSeconds.remainder(60));
-    return "$twoDigitMinutes:$twoDigitSeconds";
+
+    log("formatDurationFrom1   " + formatDurationFrom1.inMinutes.toString());
+    log("formatDurationFrom1  " + duration.inMinutes.remainder(60).toString());
+
+    if (formatDurationFrom1.inMinutes > duration.inMinutes.remainder(60)) {
+      return "$twoDigitMinutes:$twoDigitSeconds";
+    }
+    return "${twoDigits(duration.inHours)}:$twoDigitMinutes:$twoDigitSeconds";
   }
 
   String formatTimeEndPostion(Duration duration) {
     String twoDigits(int n) => n.toString().padLeft(2, "0");
     String twoDigitMinutes = twoDigits(duration.inMinutes.remainder(60));
     String twoDigitSeconds = twoDigits(duration.inSeconds.remainder(60));
+    if (formatDurationFrom1.inMinutes < duration.inMinutes.remainder(60)) {
+      return "$twoDigitMinutes:$twoDigitSeconds";
+    }
     return "${twoDigits(duration.inHours)}:$twoDigitMinutes:$twoDigitSeconds";
   }
 
@@ -115,7 +126,8 @@ class _PlayMusicState extends State<PlayMusic> {
                   SizedBox(width: 7),
                   IconButton(
                     onPressed: () async {
-                      await Share.share("");
+                      await Share.share(
+                          "القرآن الكريم كامل بدون انترنت بصوت الشيخ محمد عثمان حاج على \n حمل التطبيق من قوقل بلى \n https://play.google.com/store/apps/details?id=com.quoran.app");
                     },
                     icon: Icon(Icons.share_outlined),
                   ),
