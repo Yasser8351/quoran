@@ -27,6 +27,14 @@ class _PlayMusicState extends State<PlayMusic> {
   int expandedIndex = -1;
   DateTime timeBackPressed = DateTime.now();
   List<MusicModel> mylist = [
+    MusicModel(name: "سورة الفاتحة", url: 'yaseen.mp3'),
+    MusicModel(name: "سورة البقرة", url: 'yaseen.mp3'),
+    MusicModel(name: "سورة آل عمران", url: 'yaseen.mp3'),
+    MusicModel(name: "سورة النساء", url: 'yaseen.mp3'),
+    MusicModel(name: "سورة المائدة", url: 'yaseen.mp3'),
+    MusicModel(name: "سورة الأنعام", url: 'yaseen.mp3'),
+    MusicModel(name: "سورة الأعراف", url: 'yaseen.mp3'),
+    MusicModel(name: "سورة الأنفال", url: 'yaseen.mp3'),
     MusicModel(name: "سورة يس", url: 'yaseen.mp3'),
     MusicModel(name: "سورة الفرقان", url: 'alforgan.mp3'),
   ];
