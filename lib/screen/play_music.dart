@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:share_plus/share_plus.dart';
-
+import 'package:firebase_messaging/firebase_messaging.dart';
 import '../model/music_model.dart';
 
 class PlayMusic extends StatefulWidget {
@@ -27,14 +27,6 @@ class _PlayMusicState extends State<PlayMusic> {
   int expandedIndex = -1;
   DateTime timeBackPressed = DateTime.now();
   List<MusicModel> mylist = [
-    MusicModel(name: "سورة الفاتحة", url: 'yaseen.mp3'),
-    MusicModel(name: "سورة البقرة", url: 'yaseen.mp3'),
-    MusicModel(name: "سورة آل عمران", url: 'yaseen.mp3'),
-    MusicModel(name: "سورة النساء", url: 'yaseen.mp3'),
-    MusicModel(name: "سورة المائدة", url: 'yaseen.mp3'),
-    MusicModel(name: "سورة الأنعام", url: 'yaseen.mp3'),
-    MusicModel(name: "سورة الأعراف", url: 'yaseen.mp3'),
-    MusicModel(name: "سورة الأنفال", url: 'yaseen.mp3'),
     MusicModel(name: "سورة يس", url: 'yaseen.mp3'),
     MusicModel(name: "سورة الفرقان", url: 'alforgan.mp3'),
   ];
@@ -42,30 +34,11 @@ class _PlayMusicState extends State<PlayMusic> {
   @override
   void initState() {
     super.initState();
-    log(isPlaying.toString());
+    FirebaseMessaging.instance.subscribeToTopic("test");
     player = AudioPlayer();
     cache = AudioCache(fixedPlayer: player);
     index = 0;
     setUp();
-
-    //getCurrentPostion();
-  }
-
-  getCurrentPostion() {
-    // if (int.parse(currentPostion.toString()) != 0)
-    if (currentPostion == musicLength) {
-      log("****************");
-      log("Stop getCurrentPostion = currentPostion $currentPostion");
-      // log("musicLength $musicLength");
-      // log("index $index");
-      // log("expandedIndex $expandedIndex");
-      // log("****************");
-      if (expandedIndex == index) {
-        setState(() => index = 0);
-      } else {
-        setState(() => index + 1);
-      }
-    }
   }
 
   setUp() {
@@ -151,14 +124,6 @@ class _PlayMusicState extends State<PlayMusic> {
                   SizedBox(width: 7),
                 ],
                 backgroundColor: const Color.fromARGB(255, 0, 58, 53),
-                // title: Align(
-                //   alignment: Alignment.centerRight,
-                //   child: const Text(
-                //     "القرآن الكريم كامل بصوت الشيخ محمد عثمان حاج",
-                //     textAlign: TextAlign.right,
-                //     style: TextStyle(fontSize: 13),
-                //   ),
-                // ),
               ),
               bottomNavigationBar: Builder(builder: (context) {
                 if (expandedIndex == -1) {

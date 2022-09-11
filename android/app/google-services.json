@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1047434511185",
+    "project_id": "quroan-b06b8",
+    "storage_bucket": "quroan-b06b8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1047434511185:android:c4e297d3cf53fe14224970",
+        "android_client_info": {
+          "package_name": "com.quoran.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1047434511185-ahv5g75c29dif00k8bta7sapn4kearet.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBwof4bX7YOee0b59BWnTp5M5izUa8Emkg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1047434511185-ahv5g75c29dif00k8bta7sapn4kearet.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
