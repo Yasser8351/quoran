@@ -27,8 +27,14 @@ class _PlayMusicState extends State<PlayMusic> {
   int expandedIndex = -1;
   DateTime timeBackPressed = DateTime.now();
   List<MusicModel> mylist = [
+    MusicModel(name: "سورة الفاتحة", url: 'alfitiha.mp3'),
+    MusicModel(name: "سورة الجن", url: 'algin.mp3'),
+    MusicModel(name: "سورة القلم", url: 'alkalam.mp3'),
+    MusicModel(name: "سورة الملك", url: 'almolk.mp3'),
+    MusicModel(name: "سورة ق", url: 'khaf.mp3'),
     MusicModel(name: "سورة يس", url: 'yaseen.mp3'),
     MusicModel(name: "سورة الفرقان", url: 'alforgan.mp3'),
+    MusicModel(name: "ايات من سورة المائدة", url: 'almaida.mp3'),
   ];
 
   @override
@@ -73,6 +79,9 @@ class _PlayMusicState extends State<PlayMusic> {
     log("formatDurationFrom1   " + formatDurationFrom1.inMinutes.toString());
     log("formatDurationFrom1  " + duration.inMinutes.remainder(60).toString());
 
+    if (formatDurationFrom1.inSeconds > duration.inMinutes.remainder(60)) {
+      return "$twoDigitMinutes:$twoDigitSeconds";
+    }
     if (formatDurationFrom1.inMinutes > duration.inMinutes.remainder(60)) {
       return "$twoDigitMinutes:$twoDigitSeconds";
     }
@@ -84,6 +93,9 @@ class _PlayMusicState extends State<PlayMusic> {
     String twoDigitMinutes = twoDigits(duration.inMinutes.remainder(60));
     String twoDigitSeconds = twoDigits(duration.inSeconds.remainder(60));
     if (formatDurationFrom1.inMinutes < duration.inMinutes.remainder(60)) {
+      return "$twoDigitMinutes:$twoDigitSeconds";
+    }
+    if (formatDurationFrom1.inMinutes < duration.inSeconds.remainder(60)) {
       return "$twoDigitMinutes:$twoDigitSeconds";
     }
     return "${twoDigits(duration.inHours)}:$twoDigitMinutes:$twoDigitSeconds";
